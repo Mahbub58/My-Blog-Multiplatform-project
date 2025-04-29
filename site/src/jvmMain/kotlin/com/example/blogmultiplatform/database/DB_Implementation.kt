@@ -38,12 +38,14 @@ fun initDB_Implementation(context:InitApiContext){
 class DB_Implementation(val context: InitApiContext):DB {
 
 
-    private val client= MongoClient.create(
-//    "mongodb+srv://Mahbub58:p12345678@cluster0.efzbz3o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-        //   "mongodb+srv://mahbub:p12345678@cluster0.efzbz3o.mongodb.net/"
-        "mongodb+srv://mahbub:p12345678@cluster0.efzbz3o.mongodb.net/${Constant.DATABASE_NAME}?retryWrites=true&w=majority"
+//    private val client= MongoClient.create(
+////    "mongodb+srv://Mahbub58:p12345678@cluster0.efzbz3o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+//        //   "mongodb+srv://mahbub:p12345678@cluster0.efzbz3o.mongodb.net/"
+//        "mongodb+srv://mahbub:p12345678@cluster0.efzbz3o.mongodb.net/${Constant.DATABASE_NAME}?retryWrites=true&w=majority"
+//
+//    )
+    private val client= MongoClient.create( System.getenv("MONGODB_URI"))
 
-    )
     private val database = client.getDatabase(Constant.DATABASE_NAME)
     private val userCollection = database.getCollection<User>(  Constant.ADMIN_TABLE)
 
