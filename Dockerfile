@@ -1,5 +1,5 @@
 # Use a JDK base image
-FROM gradle:8.4-jdk21 as builder
+FROM gradle:8.4-jdk17 as builder
 WORKDIR /app
 COPY . .
 RUN ./gradlew kobwebBuild kobwebExport
