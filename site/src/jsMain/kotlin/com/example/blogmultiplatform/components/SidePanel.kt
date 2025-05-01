@@ -291,6 +291,7 @@ private fun VectorIcon(
                                onMenuClose()
                            }
                         },
+
                     size = IconSize.LG
                 )
 
