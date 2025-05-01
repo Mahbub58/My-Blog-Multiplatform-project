@@ -38,6 +38,10 @@ kobweb {
                 }
             }
         }
+
+        export {
+            enableTraces()
+        }
     }
 }
 
