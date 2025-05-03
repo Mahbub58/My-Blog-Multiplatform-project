@@ -4,7 +4,7 @@
 # specified once).
 ARG KOBWEB_APP_ROOT="site"
 
-FROM eclipse-temurin:17 as java
+FROM eclipse-temurin:21 as java
 
 FROM java as export
 
