@@ -10,7 +10,7 @@ ARG KOBWEB_APP_ROOT="site"
 # Stage: Java base image
 #-----------------------------------------------------------------------------
 
-FROM eclipse-temurin:21 AS java
+FROM eclipse-temurin:24 AS java
 
 #-----------------------------------------------------------------------------
 # Stage: Build and export site
@@ -18,7 +18,7 @@ FROM eclipse-temurin:21 AS java
 
 FROM java AS export
 
-ENV KOBWEB_CLI_VERSION=0.9.13
+ENV KOBWEB_CLI_VERSION=0.9.18
 ARG KOBWEB_APP_ROOT
 
 ENV NODE_MAJOR=20
