@@ -62,4 +62,4 @@ ARG KOBWEB_APP_ROOT
 
 #COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
 
-ENTRYPOINT /project/${KOBWEB_APP_ROOT}/.kobweb/server/start.sh
+ENTRYPOINT /project/site/.kobweb/server/start.sh
