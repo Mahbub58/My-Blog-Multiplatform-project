@@ -60,6 +60,6 @@ FROM java as run
 
 ARG KOBWEB_APP_ROOT
 
-COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
+#COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
 
-ENTRYPOINT .kobweb/server/start.sh
+ENTRYPOINT /project/${KOBWEB_APP_ROOT}/.kobweb/server/start.sh
