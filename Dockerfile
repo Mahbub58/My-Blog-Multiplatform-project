@@ -16,7 +16,7 @@ FROM java AS export
 ENV KOBWEB_CLI_VERSION=0.9.18
 ARG KOBWEB_APP_ROOT
 
-ENV NODE_MAJOR=20
+ENV NODE_MAJOR=setup_23
 
 # Copy the project code to an arbitrary subdir so we can install stuff in the
 # Docker container root without worrying about clobbering project files.
