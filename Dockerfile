@@ -38,7 +38,7 @@ RUN mkdir -p ~/.gradle && echo "org.gradle.jvmargs=-Xmx512m" >> ~/.gradle/gradle
 WORKDIR /project/${KOBWEB_APP_ROOT}
 
 # Expose default Kobweb port
-EXPOSE 8080
+EXPOSE 8000
 
 # At runtime: export the site and run the server
 ENTRYPOINT ["sh", "-c", "kobweb export --notty && .kobweb/server/start.sh"]
