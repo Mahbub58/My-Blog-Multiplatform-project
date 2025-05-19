@@ -1,22 +1,23 @@
 #-----------------------------------------------------------------------------
-# Variables shared across multiple stages (they need to be explicitly opted
-# into each stage by being declaring there too, but their values need only be
-# specified once).
+# Variables are shared across multiple stages (they need to be explicitly
+# opted into each stage by being declaring there too, but their values need
+# only be specified once).
 ARG KOBWEB_APP_ROOT="site"
+# ^ NOTE: Kobweb apps generally live in a root "site" folder in your project,
+# but you can change this in case your project has a custom layout.
 
-FROM eclipse-temurin:21 AS java
-
-FROM java AS export
+FROM eclipse-temurin:21 as java
 
 #-----------------------------------------------------------------------------
 # Create an intermediate stage which builds and exports our site. In the
 # final stage, we'll only extract what we need from this stage, saving a lot
 # of space.
+FROM java as export
 
 ENV KOBWEB_CLI_VERSION=0.9.18
 ARG KOBWEB_APP_ROOT
 
-ENV NODE_MAJOR=setup_23
+ENV NODE_MAJOR=20
 
 # Copy the project code to an arbitrary subdir so we can install stuff in the
 # Docker container root without worrying about clobbering project files.
@@ -47,19 +48,23 @@ WORKDIR /project/${KOBWEB_APP_ROOT}
 
 # Decrease Gradle memory usage to avoid OOM situations in tight environments
 # (many free Cloud tiers only give you 512M of RAM). The following amount
-# should be more than enough to build and export our site.
+# should be enough to build and export our site.
 RUN mkdir ~/.gradle && \
-    echo "org.gradle.jvmargs=-Xmx256m" >> ~/.gradle/gradle.properties
+    echo "org.gradle.jvmargs=-Xmx325m" >> ~/.gradle/gradle.properties
 
 RUN kobweb export --notty
 
 #-----------------------------------------------------------------------------
 # Create the final stage, which contains just enough bits to run the Kobweb
 # server.
-FROM java AS run
+FROM java as run
 
 ARG KOBWEB_APP_ROOT
 
 COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
 
+# Because many free tiers only give you 512M of RAM, let's limit the server's
+# memory usage to that. You can remove this ENV line if your server isn't so
+# restricted. That said, 512M should be plenty for most (all?) sites.
+ENV JAVA_TOOL_OPTIONS="-Xmx512m"
 ENTRYPOINT .kobweb/server/start.sh
