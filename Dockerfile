@@ -6,6 +6,7 @@ ARG KOBWEB_APP_ROOT="site"
 # ^ NOTE: Kobweb apps generally live in a root "site" folder in your project,
 # but you can change this in case your project has a custom layout.
 
+
 FROM eclipse-temurin:21 as java
 
 #-----------------------------------------------------------------------------
